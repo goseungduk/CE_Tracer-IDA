@@ -1,0 +1,11 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+bochs/
+ghida_plugin/
+hexrays_sdk/
+*.dll
+*.rules
+*.cfg
+findcrypt3.py
+ghida.py
+LICENSE
