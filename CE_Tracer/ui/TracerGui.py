@@ -1,5 +1,5 @@
 from os.path import dirname, abspath
-import idaapi
+import idaapi, idc
 from CE_Tracer.ui.helpers.QtCollect import QtCollection
 from CE_Tracer.core.Scan import Scanner
 
@@ -10,6 +10,9 @@ class TracerGui(idaapi.PluginForm):
         self.icon = self.qc.QtGui.QIcon(dirname(abspath(__file__))+"\\icon.png")
 
     def first_scan_event(self):
+        if(self.text_widget.text()==""):
+            idc.warning("Type any value in text box")
+            return
         self.tableWidget.setRowCount(0)
         self.scanner = Scanner()
         self.scanner.do_scan(self.text_widget.text())
@@ -22,6 +25,9 @@ class TracerGui(idaapi.PluginForm):
             self.tableWidget.setItem(rowPosition, 3, self.qc.QTableWidgetItem(str(r.prev)))
 
     def next_scan_event(self):
+        if(self.text_widget.text()==""):
+            idc.warning("Type any value in text box")
+            return
         self.scanner.next_scan(self.text_widget.text())
         self.tableWidget.setRowCount(0)
         for r in self.scanner.scan_res:

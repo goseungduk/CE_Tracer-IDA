@@ -45,3 +45,7 @@ def get_QLineEdit():
 def get_QPushButton():
     from PyQt5.QtWidgets import QPushButton
     return QPushButton
+
+def get_QMessageBox():
+    from PyQt5.QtWidgets import QMessageBox
+    return QMessageBox

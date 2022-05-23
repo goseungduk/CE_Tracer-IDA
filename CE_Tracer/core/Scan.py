@@ -49,7 +49,10 @@ class Scanner:
         for segment in self.seg_list:
             for addr in range(segment.seg_start, segment.seg_end, 8):
                 val = idaapi.dbg_read_memory(addr, 8)
-                val = struct.unpack("q",val)[0]
+                try:
+                    val = struct.unpack("q",val)[0]
+                except:
+                    continue # NoneType Error Handling
                 if(val == int(value)):
                     self.scan_res.append(ScanResult(name=segment.seg_name,addr=addr, value=val, prev=val))
     
