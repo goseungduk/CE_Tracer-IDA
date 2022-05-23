@@ -18,6 +18,10 @@ def get_QTableWidget():
     from PyQt5.QtWidgets import QTableWidget
     return QTableWidget
 
+def get_QTableWidgetItem():
+    from PyQt5.QtWidgets import QTableWidgetItem
+    return QTableWidgetItem
+
 def get_QHeaderView():
     from PyQt5.QtWidgets import QHeaderView
     return QHeaderView

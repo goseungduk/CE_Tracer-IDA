@@ -14,4 +14,5 @@ class QtCollection():
         self.QTextEdit = self.QtObjs.get_QTextEdit()
         self.QLineEdit = self.QtObjs.get_QLineEdit()
         self.QPushButton = self.QtObjs.get_QPushButton()
+        self.QTableWidgetItem = self.QtObjs.get_QTableWidgetItem()
         
