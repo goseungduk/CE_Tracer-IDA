@@ -16,3 +16,4 @@ class QtCollection():
         self.QPushButton = self.QtObjs.get_QPushButton()
         self.QTableWidgetItem = self.QtObjs.get_QTableWidgetItem()
         self.QMessageBox = self.QtObjs.get_QMessageBox()
+        self.QComboBox = self.QtObjs.get_QComboBox()

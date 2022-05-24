@@ -14,36 +14,45 @@ class TracerGui(idaapi.PluginForm):
             idc.warning("Type any value in text box")
             return
         self.tableWidget.setRowCount(0)
+        self.byte_split = self.bytes_combo.currentText().split(" ")[0]
         self.scanner = Scanner()
-        self.scanner.do_scan(self.text_widget.text())
+        self.scanner.do_scan(self.text_widget.text(), self.byte_split)
         for r in self.scanner.scan_res:
             rowPosition = self.tableWidget.rowCount()
             self.tableWidget.insertRow(rowPosition)
-            self.tableWidget.setItem(rowPosition, 0, self.qc.QTableWidgetItem(str(r.name)))
-            self.tableWidget.setItem(rowPosition, 1, self.qc.QTableWidgetItem(hex(r.addr)))
-            self.tableWidget.setItem(rowPosition, 2, self.qc.QTableWidgetItem(str(r.value)))
-            self.tableWidget.setItem(rowPosition, 3, self.qc.QTableWidgetItem(str(r.prev)))
+            self.tableWidget.setItem(rowPosition, 0, self.qc.QTableWidgetItem(str(r["name"])))
+            self.tableWidget.setItem(rowPosition, 1, self.qc.QTableWidgetItem(hex(r["addr"])))
+            self.tableWidget.setItem(rowPosition, 2, self.qc.QTableWidgetItem(str(r["value"])))
+            self.tableWidget.setItem(rowPosition, 3, self.qc.QTableWidgetItem(str(r["prev"])))
 
     def next_scan_event(self):
         if(self.text_widget.text()==""):
             idc.warning("Type any value in text box")
             return
-        self.scanner.next_scan(self.text_widget.text())
+        self.scanner.next_scan(self.text_widget.text(), self.byte_split)
         self.tableWidget.setRowCount(0)
         for r in self.scanner.scan_res:
             rowPosition = self.tableWidget.rowCount()
             self.tableWidget.insertRow(rowPosition)
-            self.tableWidget.setItem(rowPosition, 0, self.qc.QTableWidgetItem(str(r.name)))
-            self.tableWidget.setItem(rowPosition, 1, self.qc.QTableWidgetItem(hex(r.addr)))
-            self.tableWidget.setItem(rowPosition, 2, self.qc.QTableWidgetItem(str(r.value)))
-            self.tableWidget.setItem(rowPosition, 3, self.qc.QTableWidgetItem(str(r.prev)))
+            self.tableWidget.setItem(rowPosition, 0, self.qc.QTableWidgetItem(str(r["name"])))
+            self.tableWidget.setItem(rowPosition, 1, self.qc.QTableWidgetItem(hex(r["addr"])))
+            self.tableWidget.setItem(rowPosition, 2, self.qc.QTableWidgetItem(str(r["value"])))
+            self.tableWidget.setItem(rowPosition, 3, self.qc.QTableWidgetItem(str(r["prev"])))
 
     def setupControlPanel(self):
+        # Text Field
         self.text_widget = self.qc.QLineEdit()
+        # Scan Button
         self.first_scan = self.qc.QPushButton("First Scan")
         self.first_scan.clicked.connect(self.first_scan_event)
         self.next_scan = self.qc.QPushButton("Next Scan")
         self.next_scan.clicked.connect(self.next_scan_event)
+        # Value Type
+        self.bytes_combo = self.qc.QComboBox()
+        self.bytes_combo.addItems(["1 byte", "4 bytes", "8 bytes"])
+        self.bytes_combo.insertSeparator(1)
+        self.bytes_combo.insertSeparator(2)
+        self.bytes_combo.setCurrentIndex(3)
         button_layout = self.qc.QHBoxLayout()
         button_layout.setSpacing(50)
         button_layout.addWidget(self.first_scan)
@@ -52,6 +61,7 @@ class TracerGui(idaapi.PluginForm):
         button_layout.setAlignment(self.qc.Qt.AlignTop) # button layout is placed on the top
         layout.addLayout(button_layout)
         layout.addWidget(self.text_widget)
+        layout.addWidget(self.bytes_combo)
         layout.addStretch() # text widget is placed under the button layout
         return layout
 

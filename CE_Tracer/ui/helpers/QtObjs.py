@@ -49,3 +49,7 @@ def get_QPushButton():
 def get_QMessageBox():
     from PyQt5.QtWidgets import QMessageBox
     return QMessageBox
+
+def get_QComboBox():
+    from PyQt5.QtWidgets import QComboBox
+    return QComboBox
